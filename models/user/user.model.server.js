@@ -17,12 +17,16 @@ function findAllUsers(){
 function findUserByCredentials(credentials){
     return userModel.findOne(credentials);
 }
+function getUserFromSession(){
+
+}
 
 var api = {
     createUser: createUser,
     findAllUsers: findAllUsers,
     findUserById: findUserById,
     findUserByCredentials: findUserByCredentials,
+    getUserFromSession: getUserFromSession
 }
 
 // var user = {
