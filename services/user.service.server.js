@@ -5,6 +5,8 @@ module.exports = function (app){
     app.post('/api/logout', logout);
     app.post('/api/login', login);
     app.get('/api/user/:userId', findUserById);
+    app.get('/api/user/:username/username', findUserByUsername);
+    app.get('/api/user/:username/username/:password/password', findUserByCredentials);
 
     var userModel = require('../models/user/user.model.server');
 
@@ -29,6 +31,34 @@ module.exports = function (app){
                 req.session['currentUser'] = user;
                 res.send(user);
             });
+    }
+
+    function findUserByCredentials(req, res) {
+        var username = req.params['username'];
+        var password = req.params['password'];
+
+        userModel.findUserByCredentials({
+            username: username,
+            password: password
+        }).then(function (user) {
+            if(user === null) {
+                res.send(404);
+            }
+            req.session['currentUser'] = user;
+            res.send(user);
+        })
+    }
+
+    function findUserByUsername(req, res) {
+        var username = req.params['username'];
+        userModel.findUserByCredentials({username: username})
+            .then(function (user) {
+                if(user === null ){
+                    res.send(404);
+                }
+                req.session['currentUser'] = user;
+                res.send(user);
+            })
     }
 
     function findUserById(req, res) {
