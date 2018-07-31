@@ -14,9 +14,17 @@ function findSectionsforStudent(studentId) {
         .exec();
 }
 
+function unenrollStudentsFromSection(sectionId) {
+    console.log(sectionId);
+    return enrollmentModel.remove({
+        sectionId: sectionId
+    });
+}
+
 var api ={
     enrollStudentsInSection: enrollStudentsInSection,
-    findSectionsforStudent: findSectionsforStudent
+    findSectionsforStudent: findSectionsforStudent,
+    unenrollStudentsFromSection: unenrollStudentsFromSection
 }
 
 module.exports = api;
