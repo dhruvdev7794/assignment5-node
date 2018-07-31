@@ -85,11 +85,11 @@ module.exports = function (app){
     function updateProfile(req, res){
         var user = req.session['currentUser']
         var tempUser = req.body;
-        user.username = tempUser.username;
-        user.password = tempUser.password;
-        user.firstName = tempUser.firstName;
-        user.lastName = tempUser.lastName;
-        user.email = tempUser.email;
+        if(tempUser.username != undefined) user.username = tempUser.username;
+        if(tempUser.firstName != undefined)  user.firstName = tempUser.firstName;
+        if(tempUser.lastName != undefined) user.lastName = tempUser.lastName;
+        if(tempUser.email != undefined) user.email = tempUser.email;
+
         userModel.updateProfile(user)
             .then(function (response) {
                 res.json(response);
