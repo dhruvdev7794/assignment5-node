@@ -33,12 +33,24 @@ function deleteSection(sectionId) {
     });
 }
 
+function getSection(sectionId) {
+    return sectionModel.findOne({sectionId: sectionId});
+}
+
+function updateSection(section) {
+    return sectionModel.update(section,{
+        $set: {sectionId: section.id}
+    });
+}
+
 var api = {
     createSection: createSection,
     findSectionsForCourse: findSectionsForCourse,
     incrementSectionSeats: incrementSectionSeats,
     decrementSectionSeats: decrementSectionSeats,
-    deleteSection: deleteSection
+    deleteSection: deleteSection,
+    updateSection: updateSection,
+    getSection: getSection
 }
 
 module.exports = api;

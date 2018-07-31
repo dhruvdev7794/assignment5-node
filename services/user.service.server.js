@@ -1,7 +1,9 @@
 module.exports = function (app){
     app.get('/api/user', findAllUsers);
-    app.post('/api/user', createUser);
+    app.post('/api/register', createUser);
     app.get('/api/profile', profile);
+    app.put('/api/profile', updateProfile);
+    app.delete('/api/profile', deleteProfile);
     app.post('/api/logout', logout);
     app.post('/api/login', login);
     app.get('/api/user/:userId', findUserById);
@@ -80,4 +82,26 @@ module.exports = function (app){
         res.send(req.session['currentUser'])
     }
 
-}
+    function updateProfile(req, res){
+        var user = req.session['currentUser']
+        var tempUser = req.body;
+        user.username = tempUser.username;
+        user.password = tempUser.password;
+        user.firstName = tempUser.firstName;
+        user.lastName = tempUser.lastName;
+        user.email = tempUser.email;
+        userModel.updateProfile(user)
+            .then(function (response) {
+                res.json(response);
+            });
+
+    }
+
+    function deleteProfile(req, res) {
+        var user = req.session['currentUser'];
+        userModel.deleteProfile(user.username)
+            .then(function () {
+                res.send(200);
+            })
+    }
+};

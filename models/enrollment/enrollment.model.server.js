@@ -14,10 +14,11 @@ function findSectionsforStudent(studentId) {
         .exec();
 }
 
-function unenrollStudentsFromSection(sectionId) {
-    console.log(sectionId);
-    return enrollmentModel.remove({
-        sectionId: sectionId
+function unenrollStudentsFromSection(enrollment) {
+    console.log(enrollment);
+    return enrollmentModel.deleteOne({
+        studentId: enrollment.studentId,
+        sectionId: enrollment.sectionId
     });
 }
 

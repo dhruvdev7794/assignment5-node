@@ -17,8 +17,15 @@ function findAllUsers(){
 function findUserByCredentials(credentials){
     return userModel.findOne(credentials);
 }
-function getUserFromSession(){
-
+function updateProfile(user){
+    return userModel.update(user, {
+        $set: {password: user.password}
+    });
+}
+function deleteProfile(username){
+    return userModel.remove({
+        username: username
+    });
 }
 
 var api = {
@@ -26,7 +33,8 @@ var api = {
     findAllUsers: findAllUsers,
     findUserById: findUserById,
     findUserByCredentials: findUserByCredentials,
-    getUserFromSession: getUserFromSession
+    updateProfile: updateProfile,
+    deleteProfile: deleteProfile
 }
 
 // var user = {

@@ -1,10 +1,13 @@
 module.exports = function (app) {
     app.post('/api/course/:courseId/section', createSection);
     app.get('/api/course/:courseId/section', findSectionsForCourse);
-    app.get('/api/student/section', findSectionsForStudent);
     app.delete('/api/section/:sectionId', deleteSection);
+    app.get('/api/section/:sectionId', getSection);
+    app.put('/api/section/:sectionId', updateSection);
     app.post('/api/section/:sectionId/enrollment', enrollStudentInSection);
-    app.delete('/api/section/:sectionId/enrollment', unenrollStudentFromSection);
+    app.post('/api/section/:sectionId/unenrollment', unenrollStudentFromSection);
+
+    app.get('/api/student/section', findSectionsForStudent);
 
     var sectionModel = require('../models/sections/section.model.server');
     var enrollmentModel = require('../models/enrollment/enrollment.model.server');
@@ -13,6 +16,18 @@ module.exports = function (app) {
         var sectionId = req.params['sectionId'];
         sectionModel.deleteSection(sectionId)
             .then(result => res.send(result));
+    }
+
+    function getSection(req, res) {
+        var sectionId = req.params['sectionId'];
+        sectionModel.getSection(sectionId)
+            .then(result => res.json(result));
+    }
+
+    function updateSection(req, res) {
+        var sectionObj = req.body;
+        sectionModel.updateSection(sectionObj)
+            .then(section => res.json(section));
     }
 
     function findSectionsForStudent(req, res){
@@ -62,16 +77,16 @@ module.exports = function (app) {
 
     function unenrollStudentFromSection(req, res) {
         var sectionId = req.params['sectionId'];
-        // var currentUser = req.session.currentUser;
-        // var studentId = currentUser._id;
-        // var enrollment = {
-        //     studentId: studentId,
-        //     sectionId: sectionId
-        // };
+        var currentUser = req.session.currentUser;
+        var studentId = currentUser._id;
+        var enrollment = {
+            studentId: studentId,
+            sectionId: sectionId
+        };
 
         sectionModel.incrementSectionSeats(sectionId)
             .then(function () {
-                enrollmentModel.unenrollStudentsFromSection(sectionId)
+                enrollmentModel.unenrollStudentsFromSection(enrollment)
             })
             .then(function (enrollment) {
                 res.send(enrollment);

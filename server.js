@@ -63,19 +63,6 @@ app.get('/message/:theMessage', function (req, res) {
     res.send(theMessage)
 })
 
-
-// var userModel = require('./models/user/user.model.server');
-// userModel.createUser({
-//     username: 'alice',
-//     password: 'alice'
-// })
-
-// var users = []
-// userModel.findAllUsers()
-//     .then(function (users) {
-//         console.log(users);
-//     });
-
 var userService = require('./services/user.service.server');
 userService(app);
 
