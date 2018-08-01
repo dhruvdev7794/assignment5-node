@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin',
-        req.header.origin);
+        'https://assignment5-wbdv-angular.herokuapp.com');
     res.header('Access-Control-Allow-Headers',
         'Origin, A-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Methods',
@@ -28,17 +28,12 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: 'Any string'
-}))
+}));
 
 app.get('/api/session/set/:name/:value',
     setSession);
 app.get('/api/session/get/:name',
     getSession);
-// app.get('/api/session/get',
-//     getSessionAll);
-// app.get('/api/session/reset',
-//     resetSession);
-
 
 function setSession(req, res) {
     var name = req.params['name'];
@@ -68,4 +63,5 @@ userService(app);
 
 require('./services/section.service.server')(app);
 
+// app.listen(4000);
 app.listen(process.evn.PORT || 4000);
