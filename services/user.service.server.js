@@ -89,6 +89,8 @@ module.exports = function (app){
         if(tempUser.firstName != undefined)  user.firstName = tempUser.firstName;
         if(tempUser.lastName != undefined) user.lastName = tempUser.lastName;
         if(tempUser.email != undefined) user.email = tempUser.email;
+        if(tempUser.address != undefined) user.address = tempUser.address;
+        if(tempUser.phone != undefined) user.phone = tempUser.phone;
 
         userModel.updateProfile(user)
             .then(function (response) {
