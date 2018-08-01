@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/wbdv-summer-sample');
+mongoose.connect('mongodb://heroku_d7j4c8rz:1s692pte8h4k4qktqd929r0ccj@ds049170.mlab.com:49170/heroku_d7j4c8rz');
 
 
 app.use(bodyParser.json());
@@ -68,4 +68,4 @@ userService(app);
 
 require('./services/section.service.server')(app);
 
-app.listen(4000);
+app.listen(process.evn.PORT || 4000);
