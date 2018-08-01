@@ -1,4 +1,6 @@
 module.exports = function (app){
+
+    // User Services
     app.get('/api/user', findAllUsers);
     app.post('/api/register', createUser);
     app.get('/api/profile', profile);

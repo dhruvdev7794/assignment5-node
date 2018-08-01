@@ -1,14 +1,18 @@
 module.exports = function (app) {
+
+    // Section Services
     app.post('/api/course/:courseId/section', createSection);
     app.get('/api/course/:courseId/section', findSectionsForCourse);
     app.delete('/api/section/:sectionId', deleteSection);
     app.get('/api/section/:sectionId', getSectionById);
     app.put('/api/section/:sectionId', updateSection);
+    app.get('/api/section/:sectionId/enrollment', findEnrollmentforSection);
+
+    // Enrollment Services
+    // Different than suggested in the document but student Id in stored in session and hence was not needed
     app.post('/api/section/:sectionId/enrollment', enrollStudentInSection);
     app.delete('/api/section/:sectionId/unenrollment', unenrollStudentFromSection);
-
     app.get('/api/student/section', findSectionsForStudent);
-    app.get('/api/section/:sectionId/enrollment', findEnrollmentforSection);
 
 
     var sectionModel = require('../models/sections/section.model.server');
