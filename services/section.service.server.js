@@ -86,7 +86,6 @@ module.exports = function (app) {
             studentId: studentId,
             sectionId: sectionId
         };
-        // console.log(enrollment);
         enrollmentModel.findEnrollmentforSection(enrollment)
             .then(function (result) {
                 res.json(result);
@@ -95,23 +94,13 @@ module.exports = function (app) {
 
     function unenrollStudentFromSection(req, res) {
         var sectionId = req.params['sectionId'];
-        // var currentUser = req.session.currentUser;
-        var enrollment = req.body;
-        // console.log(enrollment);
-        // var studentId = currentUser._id;
-        // var enrollment = {
-        //     studentId: studentId,
-        //     sectionId: sectionId
-        // };
+        var currentUser = req.session.currentUser;
 
-        sectionModel.incrementSectionSeats(sectionId)
-            .then(function () {
-                enrollmentModel.unenrollStudentsFromSection(enrollment)
+        return enrollmentModel.unenrollStudentsFromSection(sectionId, currentUser._id)
+            .then(() => {
+                return sectionModel.incrementSectionSeats(sectionId)
             })
-            .then(function (enrollment) {
-                // console.log(enrollment);
-                res.send(enrollment);
-            })
+            .then(result => res.send(result));
     }
 
 }

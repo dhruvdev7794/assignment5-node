@@ -15,19 +15,11 @@ function findSectionsforStudent(studentId) {
         .exec();
 }
 
-function unenrollStudentsFromSection(enrollment) {
-    // console.log(enrollment.sectionId);
-    // console.log(enrollment.studentId);
-    // console.log(ObjectId(enrollment.studentId));
-    // console.log(typeof ObjectId(enrollment.studentId));
-
-    // findEnrollmentforSection(enrollment)
-    //     .then((result) => {
-    //         // console.log(result);
-    //     })
-
-    console.log({_id: enrollment[0]._id});
-    return enrollmentModel.remove({_id: ObjectId(enrollment[0]._id)});
+function unenrollStudentsFromSection(sectionId, studentId) {
+    return enrollmentModel.remove({
+        sectionId: sectionId,
+        studentId: studentId
+    })
 }
 
 function findEnrollmentforSection(enrolllment) {

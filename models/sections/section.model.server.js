@@ -38,9 +38,7 @@ function getSection(sectionId) {
 }
 
 function updateSection(section) {
-    return sectionModel.update(section,{
-        $set: {sectionId: section.id}
-    });
+    return sectionModel.update({_id: section._id}, section);
 }
 
 var api = {
